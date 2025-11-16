@@ -1,0 +1,112 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+*.pid
+*.seed
+*.pid.lock
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+*.egg
+.Python
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# ML/AI models (اگر مدل‌های حجیم دارید)
+*.pt
+*.pth
+*.h5
+*.pkl
+*.joblib
+models/pretrained/
+weights/
+
+# OpenCV and video processing
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Redis
+dump.rdb
+
+# Celery
+celerybeat-schedule
+
+# Documentation
+docs/_build/
+
+# Backup files
+*.bak
+*.backup
+
+# macOS
+*.DS_Store?
+
+# Windows
+[Tt]humbs.db
