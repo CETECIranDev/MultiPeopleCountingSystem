@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'channels',
     'django_filters',
+    'drf_yasg',
     
     # Local apps
     'dashboard',

@@ -1,6 +1,7 @@
 # api/serializers.py
 from rest_framework import serializers
 from dashboard.models import Camera, PeopleCount, AnomalyEvent
+from dashboard.advanced_models import CameraAdvanced,AnalyticsSnapshot
 
 class CameraSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
@@ -50,3 +51,13 @@ class HourlyReportSerializer(serializers.Serializer):
     entries = serializers.IntegerField()
     exits = serializers.IntegerField()
     records = serializers.IntegerField()
+
+class CameraAdvancedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CameraAdvanced
+        fields = '__all__'
+
+class AnalyticsSnapshotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AnalyticsSnapshot
+        fields = '__all__'

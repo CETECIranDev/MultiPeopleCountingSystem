@@ -10,6 +10,10 @@ from django.db.models import Sum, Count, Avg
 from .serializers import *
 from dashboard.models import *
 
+# مدیریت و API دوربین‌ها
+# این ویو برای CRUD کامل روی Camera است
+# ليست, اضافه كردن، ويرايش، حذف دوربينها
+# عمليات ويژه: كاليبراسيون و داده Real-time
 class CameraViewSet(viewsets.ModelViewSet):
     queryset = Camera.objects.all()
     serializer_class = CameraSerializer
@@ -27,6 +31,7 @@ class CameraViewSet(viewsets.ModelViewSet):
         })
     
     @action(detail=True, methods=['get'])
+    # داده بلادرنگ آخرین ۵ دقیقه
     def realtime_data(self, request, pk=None):
         """داده‌های real-time دوربین"""
         camera = self.get_object()
@@ -44,6 +49,11 @@ class CameraViewSet(viewsets.ModelViewSet):
             'camera_name': camera.name
         })
 
+
+# فقط خواندن داده‌های شمارش افراد
+# این ویوست برای صفحه گزارش و نمودارها ضروریه
+# ليست داده هاى شمارش افراد
+# فيلتر بر اساس تاريخ و دوربين
 class PeopleCountViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = PeopleCount.objects.all().order_by('-timestamp')
     serializer_class = PeopleCountSerializer
@@ -66,6 +76,7 @@ class PeopleCountViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(camera_id=camera_id)
             
         return queryset.order_by('-timestamp')
+
 
 # جایگزینی AnalyticsViewSet با APIView ساده‌تر
 class AnalyticsSummaryView(APIView):
@@ -94,6 +105,7 @@ class AnalyticsSummaryView(APIView):
         
         return Response(summary)
 
+# گزارش ساعتی که برای نمودار خطی یا BarChart می‌باشد
 class AnalyticsHourlyReportView(APIView):
     def get(self, request):
         """گزارش ساعتی"""
@@ -145,6 +157,7 @@ class AnalyticsHourlyReportView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+# نمودار ترند ۷ روز گذشته
 class AnalyticsTrendsView(APIView):
     def get(self, request):
         """داده‌های ترند"""
@@ -163,6 +176,8 @@ class AnalyticsTrendsView(APIView):
         
         return Response(list(trends))
 
+# ليست رويدادهاى غير عادى
+# قابليت علامت كذارى به عنوان حل شده
 class AnomalyEventViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = AnomalyEvent.objects.all().order_by('-timestamp')
     serializer_class = AnomalyEventSerializer

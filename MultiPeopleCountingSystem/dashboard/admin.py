@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import Camera, PeopleCount, AnomalyEvent, SystemConfig
+from .advanced_models import CameraAdvanced,AnalyticsSnapshot
 
 @admin.register(Camera)
 class CameraAdmin(admin.ModelAdmin):
@@ -69,3 +70,38 @@ class SystemConfigAdmin(admin.ModelAdmin):
     
     def has_delete_permission(self, request, obj=None):
         return False  # جلوگیری از حذف تنظیمات سیستم
+
+@admin.register(CameraAdvanced)
+class CameraAdvancedAdmin(admin.ModelAdmin):
+    list_display = ['camera', 'created_at', 'updated_at', 'admin_actions']
+    list_filter = ['camera','created_at']
+    readonly_fields = ['created_at', 'updated_at']
+    search_fields = ['camera__name']
+    list_per_page = 20
+
+    def admin_actions(self, obj):
+        return format_html(
+            '<a class="button" href="/admin/dashboard/cameraadvanced/{}/change/">ویرایش</a>',
+            obj.id
+        )
+    admin_actions.short_description = 'عملیات'
+
+@admin.register(AnalyticsSnapshot)
+class AnalyticsSnapshotAdmin(admin.ModelAdmin):
+    list_display = ['camera_adv', 'timestamp', 'admin_actions']
+    list_filter = ['camera_adv', 'timestamp']
+    readonly_fields = ['timestamp']
+    list_per_page = 20
+
+    def has_add_permission(self, request):
+        return False  # جلوگیری از ساخت دستی Snapshot
+
+    def has_change_permission(self, request, obj=None):
+        return False  # جلوگیری از تغییر داده آنالیتیکس
+
+    def admin_actions(self, obj):
+        return format_html(
+            '<a class="button" href="/admin/dashboard/analyticssnapshot/{}/change/">مشاهده</a>',
+            obj.id
+        )
+    admin_actions.short_description = 'عملیات'
